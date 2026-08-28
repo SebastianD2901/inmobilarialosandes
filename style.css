@@ -2,8 +2,8 @@
 :root {
   --primary: #0a2540;        /* Azul corporativo */
   --secondary: #1462c0;      /* Azul intermedio */
-  --accent: #19c658;         /* Verde Neón / Esmeralda brillante */
-  --accent-hover: #06a146;   /* Verde intenso para interacción */
+  --accent: #00e676;         /* Verde Neón / Esmeralda brillante */
+  --accent-hover: #00c853;   /* Verde intenso para interacción */
   --accent-glow: rgba(0, 230, 118, 0.45); /* Brillo verde */
   --dark: #071324;           /* Fondo oscuro */
   --light: #f8fafc;          /* Fondo claro */
@@ -489,7 +489,6 @@ body {
   border-color: var(--accent);
 }
 
-/* Botón especial del Video */
 .thumb-video {
   display: flex;
   align-items: center;
@@ -714,7 +713,7 @@ body {
   color: #94a3b8;
 }
 
-/* ==================== AJUSTES RESPONSIVOS MÓVILES ==================== */
+/* ==================== RESPONSIVO MÓVILES ==================== */
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;

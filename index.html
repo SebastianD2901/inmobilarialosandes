@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inmobiliaria Los Andes - Venta de Casas y Terrenos</title>
-  <link rel="stylesheet" href="style.css?v=8.0" />
+  <link rel="stylesheet" href="style.css?v=9.0" />
   <!-- Fuente Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
 
       <div class="carousel-track" id="carouselTrack">
         
-        <!-- Tarjeta 1: Casa en San Andrés (Con Video) -->
+        <!-- Tarjeta 1: Casa en San Andrés (Abre directamente con Video) -->
         <div class="card property-card">
           <div class="card-tag">En Venta</div>
           <div class="card-img-container">
@@ -91,7 +91,7 @@
     </div>
   </section>
 
-  <!-- MODAL / VENTANA EMERGENTE (Fotos y Video) -->
+  <!-- MODAL / VENTANA EMERGENTE -->
   <div id="propertyModal" class="modal">
     <div class="modal-content">
       <button type="button" id="btnCerrarModal" class="modal-close" aria-label="Cerrar">&times;</button>
@@ -99,7 +99,7 @@
       <div class="modal-grid">
         <div class="modal-gallery">
           <div class="main-image-container" id="mainMediaWrapper">
-            <img id="mainModalImg" src="4.jpeg" alt="Foto principal" />
+            <!-- Video o Foto principal se inyecta dinámicamente -->
           </div>
           <div class="thumbnail-list" id="modalThumbnails"></div>
         </div>
@@ -138,7 +138,7 @@
         <label for="nombre">Nombre Completo</label>
         <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required />
 
-        <label for="correo">Correo Electrónico (opcional)</label>
+        <label for="correo">Correo Electrónico</label>
         <input type="email" id="correo" name="_replyto" placeholder="ejemplo@correo.com" required />
 
         <label for="telefono">Número de Celular / WhatsApp</label>
@@ -212,7 +212,7 @@
     </div>
   </footer>
 
-  <!-- Script del Slider, Video y Ventana Modal -->
+  <!-- Script del Slider, Video Autoplay y Modal -->
   <script>
     const propiedadesData = {
       1: {
@@ -221,7 +221,7 @@
         location: "📍 Barrio San Andrés",
         price: "$52,000",
         desc: "Hermosa casa nueva estilo villa de una planta, construida con acabados modernos, excelente iluminación y distribución funcional.",
-        video: "video1.mp4", // Nombre de tu video .mp4 en la carpeta del proyecto
+        video: "video1.mp4", // Video principal
         images: ["4.jpeg", "2.jpg", "5.jpg", "6.jpg"],
         features: [
           "🏠 <strong>Dormitorios:</strong> 3 habitaciones amplias con iluminación natural.",
@@ -303,40 +303,68 @@
       const thumbContainer = document.getElementById("modalThumbnails");
       thumbContainer.innerHTML = "";
 
-      // Mostrar foto inicial
-      mediaContainer.innerHTML = `<img id="mainModalImg" src="${data.images[0]}" alt="Foto principal" />`;
+      // FUNCIÓN PARA RENDERIZAR VIDEO
+      function cargarVideo() {
+        mediaContainer.innerHTML = `
+          <video id="mainModalVideo" controls autoplay playsinline class="modal-video-player">
+            <source src="${data.video}" type="video/mp4">
+            Tu navegador no soporta video.
+          </video>
+        `;
+        const v = document.getElementById("mainModalVideo");
+        if (v) v.play().catch(() => {}); // Ejecuta reproducción automática
+      }
 
-      // Si tiene video disponible, insertar botón de video
+      // FUNCIÓN PARA RENDERIZAR IMAGEN
+      function cargarImagen(src) {
+        mediaContainer.innerHTML = `<img id="mainModalImg" src="${src}" alt="Foto seleccionada" />`;
+      }
+
+      // SI TIENE VIDEO: se reproduce primero por defecto
       if (data.video) {
+        cargarVideo();
+
         const videoThumb = document.createElement("div");
-        videoThumb.className = "thumb thumb-video";
+        videoThumb.className = "thumb thumb-video active";
         videoThumb.innerHTML = "▶ Video";
         videoThumb.onclick = function () {
-          mediaContainer.innerHTML = `
-            <video id="mainModalVideo" controls autoplay playsinline class="modal-video-player">
-              <source src="${data.video}" type="video/mp4">
-              Tu navegador no soporta video.
-            </video>
-          `;
+          cargarVideo();
           document.querySelectorAll("#modalThumbnails .thumb").forEach(t => t.classList.remove("active"));
           videoThumb.classList.add("active");
         };
         thumbContainer.appendChild(videoThumb);
-      }
 
-      // Generar miniaturas de imágenes
-      data.images.forEach((imgSrc, index) => {
-        const thumb = document.createElement("img");
-        thumb.src = imgSrc;
-        thumb.alt = "Foto " + (index + 1);
-        thumb.className = index === 0 ? "thumb active" : "thumb";
-        thumb.onclick = function () {
-          mediaContainer.innerHTML = `<img id="mainModalImg" src="${imgSrc}" alt="Foto seleccionada" />`;
-          document.querySelectorAll("#modalThumbnails .thumb").forEach(t => t.classList.remove("active"));
-          thumb.classList.add("active");
-        };
-        thumbContainer.appendChild(thumb);
-      });
+        // Miniaturas de fotos
+        data.images.forEach((imgSrc) => {
+          const thumb = document.createElement("img");
+          thumb.src = imgSrc;
+          thumb.alt = "Foto";
+          thumb.className = "thumb";
+          thumb.onclick = function () {
+            cargarImagen(imgSrc);
+            document.querySelectorAll("#modalThumbnails .thumb").forEach(t => t.classList.remove("active"));
+            thumb.classList.add("active");
+          };
+          thumbContainer.appendChild(thumb);
+        });
+
+      } else {
+        // SI NO TIENE VIDEO: muestra la primera foto
+        cargarImagen(data.images[0]);
+
+        data.images.forEach((imgSrc, index) => {
+          const thumb = document.createElement("img");
+          thumb.src = imgSrc;
+          thumb.alt = "Foto";
+          thumb.className = index === 0 ? "thumb active" : "thumb";
+          thumb.onclick = function () {
+            cargarImagen(imgSrc);
+            document.querySelectorAll("#modalThumbnails .thumb").forEach(t => t.classList.remove("active"));
+            thumb.classList.add("active");
+          };
+          thumbContainer.appendChild(thumb);
+        });
+      }
 
       const modal = document.getElementById("propertyModal");
       modal.classList.add("modal-show");
