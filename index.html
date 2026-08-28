@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inmobiliaria Los Andes - Venta de Casas y Terrenos</title>
-  <link rel="stylesheet" href="style.css?v=2.0" />
+  <link rel="stylesheet" href="style.css?v=8.0" />
   <!-- Fuente Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -27,81 +27,93 @@
   <!-- Hero / Portada -->
   <section id="inicio" class="hero">
     <div class="container hero-content">
-      <h1>Encuentra la casa o el terreno ideal</h1>
+      <h1>Encuentra la casa o el terreno ideal con <span class="logo-inline">Inmobiliaria<span>LosAndes</span></span></h1>
       <p>Tu mejor opción en compra y venta de propiedades con asesoría personalizada.</p>
       <a href="#propiedades" class="btn-primary hero-btn">Ver Propiedades</a>
     </div>
   </section>
 
-  <!-- Catálogo de Propiedades -->
+  <!-- Catálogo de Propiedades con Slider -->
   <section id="propiedades" class="properties-section container">
     <div class="section-title">
       <h2>Propiedades Disponibles</h2>
       <p>Opciones destacadas listas para habitar o invertir</p>
     </div>
 
-    <!-- Contenedor centrado para propiedad única -->
-    <div class="single-property-wrapper">
-      <div class="card">
-        <div class="card-tag">En Venta</div>
-        <div class="card-img-container">
-          <img src="1.jpg" alt="Casa Nueva Tipo Villa">
-        </div>
-        <div class="card-body">
-          <span class="property-type">Por Estrenar</span>
-          <h3>Casa Nueva Tipo Villa</h3>
-          <p class="location">📍 Barrio San Andrés</p>
-          <p class="price">$52,000</p>
-          <div class="card-features">
-            <span>🏠 3 Dormitorios</span>
-            <span>🚿 2 Baños Completos</span>
-            <span>🚗 Garage</span>
+    <!-- Contenedor del Carrusel -->
+    <div class="carousel-wrapper">
+      <button type="button" class="carousel-btn prev-btn" id="prevBtn" aria-label="Anterior">&#10094;</button>
+      <button type="button" class="carousel-btn next-btn" id="nextBtn" aria-label="Siguiente">&#10095;</button>
+
+      <div class="carousel-track" id="carouselTrack">
+        
+        <!-- Tarjeta 1: Casa en San Andrés (Con Video) -->
+        <div class="card property-card">
+          <div class="card-tag">En Venta</div>
+          <div class="card-img-container">
+            <img src="1.jpg" alt="Casa Nueva Tipo Villa">
           </div>
-          <!-- Botón que activa el modal -->
-          <button type="button" id="btnAbrirModal" class="btn-card">Más Información</button>
+          <div class="card-body">
+            <span class="property-type">Casa Residencial</span>
+            <h3>Casa Nueva Tipo Villa</h3>
+            <p class="location">📍 Barrio San Andrés</p>
+            <p class="price">$52,000</p>
+            <div class="card-features">
+              <span>🏠 3 Dormitorios</span>
+              <span>🚿 2 Baños</span>
+              <span>🚗 Garage</span>
+            </div>
+            <button type="button" class="btn-card" onclick="abrirModal(1)">Más Información</button>
+          </div>
         </div>
+
+        <!-- Tarjeta 2: Terreno -->
+        <div class="card property-card">
+          <div class="card-tag">Oportunidad</div>
+          <div class="card-img-container">
+            <img src="2.jpg" alt="Terreno / Lote Residencial">
+          </div>
+          <div class="card-body">
+            <span class="property-type">Lote Residencial</span>
+            <h3>Terreno Plano Urbanizado</h3>
+            <p class="location">📍 Sector Residencial</p>
+            <p class="price">$38,000</p>
+            <div class="card-features">
+              <span>📐 500 m²</span>
+              <span>💧 Todos los servicios</span>
+              <span>📜 Escrituras</span>
+            </div>
+            <button type="button" class="btn-card" onclick="abrirModal(2)">Más Información</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- MODAL / VENTANA EMERGENTE (Imágenes y Descripción) -->
+  <!-- MODAL / VENTANA EMERGENTE (Fotos y Video) -->
   <div id="propertyModal" class="modal">
     <div class="modal-content">
       <button type="button" id="btnCerrarModal" class="modal-close" aria-label="Cerrar">&times;</button>
       
       <div class="modal-grid">
-        <!-- Galería de imágenes -->
         <div class="modal-gallery">
-          <div class="main-image-container">
-            <img id="mainModalImg" src="4.jpeg" alt="Detalle de la Casa" />
+          <div class="main-image-container" id="mainMediaWrapper">
+            <img id="mainModalImg" src="4.jpeg" alt="Foto principal" />
           </div>
-          <div class="thumbnail-list">
-            <img src="4.jpeg" alt="Foto 1" class="thumb active" />
-            <img src="2.jpg" alt="Foto 2" class="thumb" />
-            <img src="5.jpg" alt="Foto 3" class="thumb" />
-            <img src="6.jpg" alt="Foto 4" class="thumb" />
-          </div>
+          <div class="thumbnail-list" id="modalThumbnails"></div>
         </div>
 
-        <!-- Descripción detallada -->
         <div class="modal-details">
-          <span class="property-tag-modal">Casa de Estreno</span>
-          <h2>Casa Nueva Tipo Villa</h2>
-          <p class="modal-location">📍 Barrio San Andrés</p>
-          <div class="modal-price">$52,000</div>
+          <span class="property-tag-modal" id="modalTag">Casa de Estreno</span>
+          <h2 id="modalTitle">Casa Nueva Tipo Villa</h2>
+          <p class="modal-location" id="modalLocation">📍 Barrio San Andrés</p>
+          <div class="modal-price" id="modalPrice">$52,000</div>
 
           <h3>Características Principales</h3>
-          <p class="modal-desc">
-            Hermosa casa nueva estilo villa de una planta, construida con acabados modernos, excelente iluminación y espacios bien distribuidos para tu total confort.
-          </p>
+          <p class="modal-desc" id="modalDesc"></p>
 
-          <ul class="modal-feature-list">
-            <li>🏠 <strong>Dormitorios:</strong> 3 habitaciones amplias con iluminación natural.</li>
-            <li>🚿 <strong>Baños:</strong> 2 baños completos con revestimiento cerámico y espejos LED.</li>
-            <li>🚗 <strong>Parqueadero:</strong> Espacio de garage privado.</li>
-            <li>🌿 <strong>Exteriores:</strong> Patio privado y pasillo lateral independiente.</li>
-            <li>📜 <strong>Documentación:</strong> Al día y lista para entrega inmediata.</li>
-          </ul>
+          <ul class="modal-feature-list" id="modalFeatures"></ul>
 
           <a href="#contacto" id="btnContactoModal" class="btn-primary modal-contact-btn">Solicitar Información / Visita</a>
         </div>
@@ -109,7 +121,7 @@
     </div>
   </div>
 
-  <!-- Sección de Contacto (Formspree) -->
+  <!-- Sección de Contacto -->
   <section id="contacto" class="contact-section">
     <div class="container contact-container">
       <div class="contact-info">
@@ -122,12 +134,11 @@
         </ul>
       </div>
 
-      <!-- Formulario Formspree -->
       <form action="https://formspree.io/f/mrpggzbk" method="POST" class="contact-form">
         <label for="nombre">Nombre Completo</label>
         <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required />
 
-        <label for="correo">Correo Electrónico</label>
+        <label for="correo">Correo Electrónico (opcional)</label>
         <input type="email" id="correo" name="_replyto" placeholder="ejemplo@correo.com" required />
 
         <label for="telefono">Número de Celular / WhatsApp</label>
@@ -137,7 +148,7 @@
         <select id="interes" name="tipo_operacion" required>
           <option value="" disabled selected>Selecciona una opción...</option>
           <option value="Quiero Comprar la Casa en San Andrés">Quiero Comprar la Casa en San Andrés ($52,000)</option>
-          <option value="Quiero Comprar un Terreno">Quiero Comprar un Terreno</option>
+          <option value="Quiero Comprar el Terreno">Quiero Comprar el Terreno ($38,000)</option>
           <option value="Quiero Vender una Propiedad">Quiero Vender mi Propiedad</option>
           <option value="Otra Consulta">Otra Consulta</option>
         </select>
@@ -151,7 +162,7 @@
   </section>
 
   <!-- Botón Flotante de WhatsApp -->
-  <a href="https://wa.me/593969013643?text=Hola,%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20casa%20en%20Barrio%20San%20Andr%C3%A9s" 
+  <a href="https://wa.me/593969013643?text=Hola,%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20las%20propiedades%20disponibles" 
      class="whatsapp-float" 
      target="_blank" 
      rel="noopener noreferrer"
@@ -161,7 +172,7 @@
     </svg>
   </a>
 
-  <!-- Footer con Redes Sociales -->
+  <!-- Footer con Logo Animado -->
   <footer class="footer">
     <div class="container footer-content">
       <div class="footer-brand">
@@ -182,7 +193,7 @@
           <!-- Instagram -->
           <a href="https://www.instagram.com/mas_coffe25" target="_blank" rel="noopener noreferrer" class="social-btn instagram" title="Instagram">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.441-1.44z"/>
             </svg>
           </a>
 
@@ -201,49 +212,136 @@
     </div>
   </footer>
 
-  <!-- Script de interacción -->
+  <!-- Script del Slider, Video y Ventana Modal -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const modal = document.getElementById("propertyModal");
-      const btnAbrir = document.getElementById("btnAbrirModal");
-      const btnCerrar = document.getElementById("btnCerrarModal");
-      const btnContacto = document.getElementById("btnContactoModal");
-      const mainImg = document.getElementById("mainModalImg");
-      const thumbs = document.querySelectorAll(".thumbnail-list .thumb");
+    const propiedadesData = {
+      1: {
+        tag: "Casa de Estreno",
+        title: "Casa Nueva Tipo Villa",
+        location: "📍 Barrio San Andrés",
+        price: "$52,000",
+        desc: "Hermosa casa nueva estilo villa de una planta, construida con acabados modernos, excelente iluminación y distribución funcional.",
+        video: "video1.mp4", // Nombre de tu video .mp4 en la carpeta del proyecto
+        images: ["4.jpeg", "2.jpg", "5.jpg", "6.jpg"],
+        features: [
+          "🏠 <strong>Dormitorios:</strong> 3 habitaciones amplias con iluminación natural.",
+          "🚿 <strong>Baños:</strong> 2 baños completos con revestimiento cerámico y espejos LED.",
+          "🚗 <strong>Parqueadero:</strong> Espacio de garage privado.",
+          "🌿 <strong>Exteriores:</strong> Patio privado y pasillo lateral independiente.",
+          "📜 <strong>Documentación:</strong> Al día y lista para entrega inmediata."
+        ]
+      },
+      2: {
+        tag: "Lote / Terreno",
+        title: "Terreno Plano Urbanizado",
+        location: "📍 Sector Residencial",
+        price: "$38,000",
+        desc: "Excelente terreno totalmente plano listo para construir tu hogar o proyecto de inversión. Ubicado en una zona tranquila y de alta plusvalía.",
+        video: "", 
+        images: ["2.jpg", "1.jpg", "5.jpg", "6.jpg"],
+        features: [
+          "📐 <strong>Área:</strong> 500 m² de terreno 100% plano.",
+          "💧 <strong>Servicios:</strong> Conexión de agua potable, energía eléctrica y alcantarillado.",
+          "🛣️ <strong>Acceso:</strong> Calle amplia y de fácil circulación vehicular.",
+          "📜 <strong>Documentación:</strong> Escrituras públicas individuales al día."
+        ]
+      }
+    };
 
-      // Abrir modal
-      if (btnAbrir) {
-        btnAbrir.addEventListener("click", function () {
-          modal.classList.add("modal-show");
-          document.body.style.overflow = "hidden";
+    document.addEventListener("DOMContentLoaded", function () {
+      const track = document.getElementById("carouselTrack");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      if (prevBtn && nextBtn && track) {
+        prevBtn.addEventListener("click", () => {
+          track.scrollBy({ left: -track.offsetWidth * 0.9, behavior: "smooth" });
+        });
+        nextBtn.addEventListener("click", () => {
+          track.scrollBy({ left: track.offsetWidth * 0.9, behavior: "smooth" });
         });
       }
 
-      // Cerrar modal
+      const modal = document.getElementById("propertyModal");
+      const btnCerrar = document.getElementById("btnCerrarModal");
+      const btnContacto = document.getElementById("btnContactoModal");
+
       function cerrar() {
         modal.classList.remove("modal-show");
         document.body.style.overflow = "auto";
+        const videoElem = document.getElementById("mainModalVideo");
+        if (videoElem) videoElem.pause();
       }
 
       if (btnCerrar) btnCerrar.addEventListener("click", cerrar);
       if (btnContacto) btnContacto.addEventListener("click", cerrar);
 
-      // Cerrar al pulsar fuera del contenido
       window.addEventListener("click", function (e) {
-        if (e.target === modal) {
-          cerrar();
-        }
-      });
-
-      // Galería interactiva
-      thumbs.forEach(function (thumb) {
-        thumb.addEventListener("click", function () {
-          mainImg.src = this.src;
-          thumbs.forEach(t => t.classList.remove("active"));
-          this.classList.add("active");
-        });
+        if (e.target === modal) cerrar();
       });
     });
+
+    function abrirModal(id) {
+      const data = propiedadesData[id];
+      if (!data) return;
+
+      document.getElementById("modalTag").innerText = data.tag;
+      document.getElementById("modalTitle").innerText = data.title;
+      document.getElementById("modalLocation").innerText = data.location;
+      document.getElementById("modalPrice").innerText = data.price;
+      document.getElementById("modalDesc").innerText = data.desc;
+
+      const featList = document.getElementById("modalFeatures");
+      featList.innerHTML = "";
+      data.features.forEach(f => {
+        const li = document.createElement("li");
+        li.innerHTML = f;
+        featList.appendChild(li);
+      });
+
+      const mediaContainer = document.getElementById("mainMediaWrapper");
+      const thumbContainer = document.getElementById("modalThumbnails");
+      thumbContainer.innerHTML = "";
+
+      // Mostrar foto inicial
+      mediaContainer.innerHTML = `<img id="mainModalImg" src="${data.images[0]}" alt="Foto principal" />`;
+
+      // Si tiene video disponible, insertar botón de video
+      if (data.video) {
+        const videoThumb = document.createElement("div");
+        videoThumb.className = "thumb thumb-video";
+        videoThumb.innerHTML = "▶ Video";
+        videoThumb.onclick = function () {
+          mediaContainer.innerHTML = `
+            <video id="mainModalVideo" controls autoplay playsinline class="modal-video-player">
+              <source src="${data.video}" type="video/mp4">
+              Tu navegador no soporta video.
+            </video>
+          `;
+          document.querySelectorAll("#modalThumbnails .thumb").forEach(t => t.classList.remove("active"));
+          videoThumb.classList.add("active");
+        };
+        thumbContainer.appendChild(videoThumb);
+      }
+
+      // Generar miniaturas de imágenes
+      data.images.forEach((imgSrc, index) => {
+        const thumb = document.createElement("img");
+        thumb.src = imgSrc;
+        thumb.alt = "Foto " + (index + 1);
+        thumb.className = index === 0 ? "thumb active" : "thumb";
+        thumb.onclick = function () {
+          mediaContainer.innerHTML = `<img id="mainModalImg" src="${imgSrc}" alt="Foto seleccionada" />`;
+          document.querySelectorAll("#modalThumbnails .thumb").forEach(t => t.classList.remove("active"));
+          thumb.classList.add("active");
+        };
+        thumbContainer.appendChild(thumb);
+      });
+
+      const modal = document.getElementById("propertyModal");
+      modal.classList.add("modal-show");
+      document.body.style.overflow = "hidden";
+    }
   </script>
 
 </body>
