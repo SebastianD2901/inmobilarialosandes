@@ -1,14 +1,230 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuadros Surrealistas</title>
-    <link rel="stylesheet" href="styles.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inmobiliaria - Venta de Casas y Terrenos</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Fuente Google Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Cuadros Surrealistas</h1>
-    <p>Bienvenido a nuestra galería de cuadros surrealistas.</p>
+
+  <!-- Encabezado / Navegación -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="#inicio" class="logo">Inmobilaria<span>LosAndes</span></a>
+      <nav class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#propiedades">Propiedades</a>
+        <a href="#contacto" class="btn-nav">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero / Portada -->
+  <section id="inicio" class="hero">
+    <div class="container hero-content">
+      <h1>Encuentra la casa o el terreno ideal</h1>
+      <p>Tu mejor opción en compra y venta de propiedades inmobiliarias con asesoría personalizada.</p>
+      <a href="#propiedades" class="btn-primary hero-btn">Ver Propiedades</a>
+    </div>
+  </section>
+
+  <!-- Catálogo de Propiedades -->
+  <section id="propiedades" class="properties-section container">
+    <div class="section-title">
+      <h2>Propiedades Disponibles</h2>
+      <p>Opciones destacadas listas para habitar o invertir</p>
+    </div>
+
+    <div class="grid-cards">
+      <!-- Tarjeta 1: Casa (Abre el Modal con imágenes 5 a 8) -->
+      <div class="card">
+        <div class="card-tag">En Venta</div>
+        <img src="1.jpg.jpg.jpeg" alt="Casa en Venta - Exterior">
+        <div class="card-body">
+          <span class="property-type">Casa Residencial</span>
+          <h3>Casa Familiar con Patio Privado</h3>
+          <p class="location">📍 Sector Residencial Norte</p>
+          <p class="price">Consultar Precio</p>
+          <div class="card-features">
+            <span>🏠 Casa Lista</span>
+            <span>🚿 Baños Nuevos</span>
+            <span>🌿 Patio Amplio</span>
+          </div>
+          <!-- Botón que abre el modal -->
+          <button type="button" class="btn-card" onclick="abrirModal()">Más Información</button>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="card">
+        <div class="card-tag">Disponible</div>
+        <img src="2.jpg.jpeg" alt="Baño con Ducha Moderna">
+        <div class="card-body">
+          <span class="property-type">Acabados de Estreno</span>
+          <h3>Baño Completo y Moderno</h3>
+          <p class="location">📍 Interior de la Propiedad</p>
+          <p class="price">Consultar Precio</p>
+          <div class="card-features">
+            <span>🚿 Ducha</span>
+            <span>✨ Espejo LED</span>
+            <span>🛁 Cerámica</span>
+          </div>
+          <button type="button" class="btn-card" onclick="abrirModal()">Más Información</button>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="card">
+        <div class="card-tag">En Venta</div>
+        <img src="3.jpg.jpeg" alt="Sanitario y Lavamanos">
+        <div class="card-body">
+          <span class="property-type">Área Social</span>
+          <h3>Espacios Renovados</h3>
+          <p class="location">📍 Sector Residencial</p>
+          <p class="price">Consultar Precio</p>
+          <div class="card-features">
+            <span>🚽 Sanitarios Nuevos</span>
+            <span>🪵 Pared Alistonada</span>
+            <span>💡 Iluminación</span>
+          </div>
+          <button type="button" class="btn-card" onclick="abrirModal()">Más Información</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL / VENTANA EMERGENTE (Imágenes 5 al 8 y Descripción) -->
+  <div id="propertyModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="cerrarModal()">&times;</span>
+      
+      <div class="modal-grid">
+        <!-- Galería de imágenes (5 al 8) -->
+        <div class="modal-gallery">
+          <div class="main-image-container">
+            <img id="mainModalImg" src="5.jpg" alt="Vista Principal de la Casa" />
+          </div>
+          <div class="thumbnail-list">
+            <img src="5.jpg" alt="Foto 5 - Habitación" class="thumb active" onclick="cambiarImagen(this.src)" />
+            <img src="6.jpg" alt="Foto 6 - Cocina" class="thumb" onclick="cambiarImagen(this.src)" />
+            <img src="7.jpg" alt="Foto 7 - Baño / Lavamanos" class="thumb" onclick="cambiarImagen(this.src)" />
+            <img src="8.jpg" alt="Foto 8 - Ducha / Cerámica" class="thumb" onclick="cambiarImagen(this.src)" />
+          </div>
+        </div>
+
+        <!-- Descripción detallada -->
+        <div class="modal-details">
+          <span class="property-tag-modal">Propiedad Destacada</span>
+          <h2>Casa Residencial Lista para Habitar</h2>
+          <p class="modal-location">📍 Sector Residencial Norte</p>
+          <div class="modal-price">Precio a convenir / Negociable</div>
+
+          <h3>Descripción de la Propiedad</h3>
+          <p class="modal-desc">
+            Excelente oportunidad inmobiliaria. Vivienda de construcción sólida y funcional, diseñada para ofrecer comodidad, privacidad y confort a toda la familia.
+          </p>
+
+          <ul class="modal-feature-list">
+            <li>✅ <strong>Dormitorios:</strong> Habitaciones amplias con buena ventilación e iluminación natural.</li>
+            <li>✅ <strong>Cocina:</strong> Muebles empotrados, mesón de granito/acabado fino y espacio funcional.</li>
+            <li>✅ <strong>Baños modernos:</strong> Revestimiento cerámico de piso a techo, espejo con luz LED táctil y grifería nueva.</li>
+            <li>✅ <strong>Exteriores:</strong> Amplio pasillo lateral y patio posterior con cerramiento perimetral independiente.</li>
+            <li>✅ <strong>Documentación:</strong> Todo en regla, lista para escrituración inmediata.</li>
+          </ul>
+
+          <a href="#contacto" class="btn-primary modal-contact-btn" onclick="cerrarModal()">Solicitar Visita o Información</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Contacto (Formspree) -->
+  <section id="contacto" class="contact-section">
+    <div class="container contact-container">
+      <div class="contact-info">
+        <h2>¿Quieres comprar o vender una propiedad?</h2>
+        <p>Llena este formulario y nos pondremos en contacto contigo de inmediato para brindarte asesoría.</p>
+        <ul class="contact-list">
+          <li>📞 <strong>WhatsApp/Teléfono:</strong> +593 99 999 9999</li>
+          <li>✉️ <strong>Atención rápida y personalizada</strong></li>
+          <li>📍 <strong>Venta de Casas y Terrenos</strong></li>
+        </ul>
+      </div>
+
+      <!-- Formulario conectado a Formspree -->
+      <form action="https://formspree.io/f/mrpggzbk" method="POST" class="contact-form">
+        <label for="nombre">Nombre Completo</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required />
+
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" name="_replyto" placeholder="ejemplo@correo.com" required />
+
+        <label for="telefono">Número de Celular / WhatsApp</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="Ej: 0991234567" required />
+
+        <label for="interes">¿Qué deseas realizar?</label>
+        <select id="interes" name="tipo_operacion" required>
+          <option value="" disabled selected>Selecciona una opción...</option>
+          <option value="Quiero Comprar la Casa Residencial">Quiero comprar la Casa Residencial</option>
+          <option value="Quiero Comprar un Terreno">Quiero Comprar un Terreno</option>
+          <option value="Quiero Vender una Propiedad">Quiero Vender mi Propiedad</option>
+          <option value="Otra Consulta">Otra Consulta</option>
+        </select>
+
+        <label for="mensaje">Detalles o mensaje adicional</label>
+        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Indica preguntas sobre la propiedad, formas de pago, etc..." required></textarea>
+
+        <button type="submit" class="btn-primary">Enviar Solicitud</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Pie de página -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 InmoRaíz. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Script para la interacción del Modal y Galería -->
+  <script>
+    const modal = document.getElementById("propertyModal");
+    const mainImg = document.getElementById("mainModalImg");
+
+    function abrirModal() {
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden"; // Evita scroll de fondo
+    }
+
+    function cerrarModal() {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    // Cambiar la imagen principal al hacer clic en miniaturas
+    function cambiarImagen(src) {
+      mainImg.src = src;
+      const thumbnails = document.querySelectorAll('.thumbnail-list .thumb');
+      thumbnails.forEach(thumb => {
+        thumb.classList.remove('active');
+        if (thumb.src === src) {
+          thumb.classList.add('active');
+        }
+      });
+    }
+
+    // Cerrar el modal si se hace clic fuera del contenido blanco
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        cerrarModal();
+      }
+    };
+  </script>
+
 </body>
 </html>
