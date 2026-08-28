@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inmobiliaria - Venta de Casas y Terrenos</title>
+  <title>Inmobiliaria Los Andes - Venta de Casas y Terrenos</title>
   <link rel="stylesheet" href="style.css" />
   <!-- Fuente Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
   <!-- Encabezado / Navegación -->
   <header class="header">
     <div class="container nav-container">
-      <a href="#inicio" class="logo">Inmobilaria<span>LosAndes</span></a>
+      <a href="#inicio" class="logo">Inmobiliaria<span>LosAndes</span></a>
       <nav class="nav-links">
         <a href="#inicio">Inicio</a>
         <a href="#propiedades">Propiedades</a>
@@ -64,22 +64,22 @@
     </div>
   </section>
 
-  <!-- MODAL / VENTANA EMERGENTE (Imágenes 5 al 8 y Descripción) -->
+  <!-- MODAL / VENTANA EMERGENTE (Imágenes y Descripción) -->
   <div id="propertyModal" class="modal">
     <div class="modal-content">
-      <button type="button" id="btnCerrarModal" class="modal-close">&times;</button>
+      <button type="button" id="btnCerrarModal" class="modal-close" aria-label="Cerrar">&times;</button>
       
       <div class="modal-grid">
-        <!-- Galería de imágenes (5 al 8) -->
+        <!-- Galería de imágenes -->
         <div class="modal-gallery">
           <div class="main-image-container">
-            <img id="mainModalImg" src="5.jpg" alt="Detalle de la Casa" />
+            <img id="mainModalImg" src="4.jpeg" alt="Detalle de la Casa" />
           </div>
           <div class="thumbnail-list">
-            <img src="4.jpeg" alt="Foto 5" class="thumb active" />
-            <img src="2.jpg" alt="Foto 6" class="thumb" />
-            <img src="5.jpg" alt="Foto 7" class="thumb" />
-            <img src="6.jpg" alt="Foto 8" class="thumb" />
+            <img src="4.jpeg" alt="Foto 1" class="thumb active" />
+            <img src="2.jpg" alt="Foto 2" class="thumb" />
+            <img src="5.jpg" alt="Foto 3" class="thumb" />
+            <img src="6.jpg" alt="Foto 4" class="thumb" />
           </div>
         </div>
 
@@ -165,7 +165,7 @@
   <footer class="footer">
     <div class="container footer-content">
       <div class="footer-brand">
-        <a href="#inicio" class="logo footer-logo">Inmo<span>Raíz</span></a>
+        <a href="#inicio" class="logo footer-logo">Inmobiliaria<span>LosAndes</span></a>
         <p>Expertos en venta de casas y terrenos.</p>
       </div>
 
@@ -197,11 +197,11 @@
     </div>
     
     <div class="footer-bottom">
-      <p>&copy; 2026 InmoRaíz. Todos los derechos reservados.</p>
+      <p>&copy; 2026 Inmobiliaria Los Andes. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <!-- Script con control de eventos verificado -->
+  <!-- Script de interacción -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const modal = document.getElementById("propertyModal");
@@ -228,14 +228,14 @@
       if (btnCerrar) btnCerrar.addEventListener("click", cerrar);
       if (btnContacto) btnContacto.addEventListener("click", cerrar);
 
-      // Cerrar al dar clic fuera del contenido blanco
+      // Cerrar al pulsar fuera del contenido
       window.addEventListener("click", function (e) {
         if (e.target === modal) {
           cerrar();
         }
       });
 
-      // Galería de fotos (5 a 8)
+      // Galería interactiva
       thumbs.forEach(function (thumb) {
         thumb.addEventListener("click", function () {
           mainImg.src = this.src;
